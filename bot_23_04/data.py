@@ -1,2 +1,3 @@
-TOKEN =
-list = []
+TOKEN = '6217940788:AAG9DruoXHjyXD8XYYhizWyk1Pq_wt32oK8'
+
+list = ['https://t.me/SecLabNews', 7444, 'https://t.me/overlamer1', 523, 'https://t.me/thehackernews', 679, 'https://t.me/haccking', 4862, 'https://t.me/opennet_ru', 4175, 'https://t.me/dataleak', 1621, 'https://t.me/Social_engineering', 967, 'https://t.me/hack_a_day', 39, 'https://t.me/tstmwschanell', 20, 'https://t.me/pystyle', 32, 'https://t.me/c/1188685801', 181, 'https://t.me/exploitex', 1337, 'https://t.me/alexmakus', 3432, 'https://t.me/xakep_ru', 9044, 'https://t.me/webware', 3007, 'https://t.me/parseronio', 10000]

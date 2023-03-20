@@ -1,7 +1,9 @@
 import telebot
 from telebot import types
 
-bot = telebot.TeleBot('5916308852:AAF2rIClnAD36dVXVo3i1eNqhMftVK5gRUE')
+from data import TOKEN
+
+bot = telebot.TeleBot(TOKEN)
 
 
 @bot.message_handler(commands=['start'])
@@ -35,7 +37,7 @@ def website(message):
 @bot.message_handler(commands=['help'])
 def website(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    website = types.KeyboardButton('web site')
+    website = types.KeyboardButton('website')
     start = types.KeyboardButton('start')
     markup.add(website, start)
     bot.send_message(message.chat.id, 'Выберите команду:', reply_markup=markup)
