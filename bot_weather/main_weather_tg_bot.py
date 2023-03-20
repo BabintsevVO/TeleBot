@@ -1,9 +1,22 @@
 import requests
 import datetime
-from data import open_weather_token
+from data import TOKEN, open_weather_token
+from aiogram import Bot, types
+from aiogram.dispatcher import Dispatcher
+from aiogram.utils import executor
 
 
-def get_weather(city, open_weather_token):
+bot = Bot(token=TOKEN)
+dp = Dispatcher(bot)
+
+
+@dp.message_handler(commands=["start"])
+async def start_command(message: types.Message):
+    await message.reply("Привет! Напиши мне название города и я пришлю сводку погоды!")
+
+
+@dp.message_handler()
+async def get_weather(message: types.Message):
 
     code_to_smile = {
         "Clear": "Ясно \U00002600",
@@ -16,7 +29,7 @@ def get_weather(city, open_weather_token):
     }
 
     try:
-        c = requests.get(f'http://api.openweathermap.org/geo/1.0/direct?q={city}&limit={1}&appid={open_weather_token}')
+        c = requests.get(f'http://api.openweathermap.org/geo/1.0/direct?q={message.text}&limit={1}&appid={open_weather_token}')
         data_c = c.json()
         lat = data_c[0]['lat']
         lon = data_c[0]['lon']
@@ -40,23 +53,16 @@ def get_weather(city, open_weather_token):
         length_of_the_day = datetime.datetime.fromtimestamp(data_r["sys"]["sunset"]) - datetime.datetime.fromtimestamp(
             data_r["sys"]["sunrise"])
 
-        print(f"***{datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}***\n"
+        await message.reply(f"***{datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}***\n"
               f"Погода в городе: {city}\nТемпература: {cur_weather}C° {wd}\n"
               f"Влажность: {humidity}%\nДавление: {pressure} мм.рт.ст\nВетер: {wind} м/с\n"
               f"Восход солнца: {sunrise_timestamp}\nЗакат солнца: {sunset_timestamp}\nПродолжительность дня: {length_of_the_day}\n"
               f"Хорошего дня!"
               )
 
-    except Exception as ex:
-        print(ex)
-        print('Проверьте название города')
-
-
-def main():
-    city = input('Введите город: ')
-    get_weather(city, open_weather_token)
+    except:
+        await message.reply('\U00002620 Проверьте название города \U00002620')
 
 
 if __name__ == '__main__':
-    main()
-
+    executor.start_polling(dp)
